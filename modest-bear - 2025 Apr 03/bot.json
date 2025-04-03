@@ -1,0 +1,1294 @@
+{
+  "version": "1.17",
+  "settings": {
+    "defaultLanguage": "en",
+    "languages": [
+      "en"
+    ],
+    "description": "",
+    "id": "28e8c0b0-8122-4c80-bd8f-e01af78a2c5a",
+    "inactivityTimeout": 0,
+    "botVariables": [
+      {
+        "id": "var-c3a9f0b671",
+        "name": "dateTime",
+        "description": "",
+        "type": "date",
+        "scope": "bot",
+        "storeAsTag": false
+      }
+    ],
+    "userVariables": [],
+    "nodeRepetitionLimit": 3,
+    "configVariables": {},
+    "cognitiveConfigs": {
+      "openAi": {}
+    },
+    "useLlmz": true,
+    "defaultBestModel": "openai__gpt-4o-2024-11-20",
+    "defaultFastModel": "openai__gpt-4o-mini-2024-07-18",
+    "useClient": true,
+    "llmzVersion": "01-Oct-2024",
+    "autonomousModel": "best-model",
+    "fallbackModel": "google-ai__models/gemini-2.0-flash",
+    "conversationVariables": []
+  },
+  "flows": [
+    {
+      "id": "wf-error",
+      "name": "Error",
+      "startNode": "nd-98dc0bcc87",
+      "variables": [],
+      "links": [
+        {
+          "id": "edg-1cb5862648",
+          "source": "nd-98dc0bcc87",
+          "sourcePort": "trs-02c7129430",
+          "target": "nd-58fca56e01"
+        },
+        {
+          "id": "edg-1c28c96d6a",
+          "source": "nd-58fca56e01",
+          "sourcePort": "nd-58fca56e01",
+          "target": "nd-e05f59dd66"
+        }
+      ],
+      "nodes": [
+        {
+          "comment": "<p><strong><span style=\"font-size: 18px\">⛔️ When something goes wrong</span></strong></p><p><br>This workflow is executed when there's an <strong>unexpected error</strong> in one of the other workflows.</p><p></p><p>You can use this to inform the user of the situation before ending the conversation.</p>",
+          "type": "comment",
+          "id": "nd-8ff3d7d295",
+          "name": "Comment1",
+          "deletable": true,
+          "instructions": [],
+          "height": 148,
+          "width": 401,
+          "x": 90,
+          "y": -45
+        },
+        {
+          "instructions": [
+            {
+              "id": "ins-2762f70004",
+              "type": "content",
+              "content": {
+                "type": "text",
+                "text": {
+                  "staticValue": "Sorry, an error occurred. Please try again later",
+                  "dynamicValue": "",
+                  "valueType": "static"
+                },
+                "typing": {
+                  "valueType": "static",
+                  "staticValue": true
+                }
+              },
+              "nodeId": "nd-58fca56e01",
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": "nd-e05f59dd66"
+          },
+          "type": "standard",
+          "id": "nd-58fca56e01",
+          "name": "Handler",
+          "deletable": true,
+          "x": 450,
+          "y": 120
+        },
+        {
+          "id": "nd-98dc0bcc87",
+          "name": "On_Error",
+          "type": "entry",
+          "deletable": false,
+          "variables": [],
+          "instructions": [
+            {
+              "id": "trs-02c7129430",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-58fca56e01"
+              },
+              "transitions": [],
+              "nodeId": "nd-98dc0bcc87"
+            }
+          ],
+          "x": 90,
+          "y": 120
+        },
+        {
+          "id": "nd-e05f59dd66",
+          "name": "End",
+          "type": "end",
+          "variables": [],
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-945140a646",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "END"
+              },
+              "transitions": [],
+              "nodeId": "nd-e05f59dd66"
+            }
+          ],
+          "x": 810,
+          "y": 120
+        }
+      ]
+    },
+    {
+      "id": "wf-timeout",
+      "name": "Timeout",
+      "startNode": "nd-9f7f3268ac",
+      "variables": [],
+      "links": [
+        {
+          "id": "edg-b0d2adcd13",
+          "source": "nd-e6c012a652",
+          "sourcePort": "nd-e6c012a652",
+          "target": "nd-199fdcf439"
+        },
+        {
+          "id": "edg-6d17a0591b",
+          "source": "nd-9f7f3268ac",
+          "sourcePort": "trs-0c7a9a0003",
+          "target": "nd-e6c012a652"
+        }
+      ],
+      "nodes": [
+        {
+          "instructions": [],
+          "defaultTransition": {
+            "targetNodeId": "nd-199fdcf439"
+          },
+          "type": "standard",
+          "id": "nd-e6c012a652",
+          "name": "Handler",
+          "deletable": true,
+          "x": 435,
+          "y": 105
+        },
+        {
+          "comment": "<p><strong><span style=\"font-size: 18px\">⌛️ When conversation times out</span></strong></p><p><br>This workflow is executed when the conversation <strong>times out</strong> before it had time to flow to an <strong>End Node</strong>.</p><p></p><p>The <strong>Timeout Delay</strong> is configurable in the <strong>Chatbot Settings.</strong></p><p></p><p>You can use this to inform the user of the situation before ending the conversation.</p>",
+          "type": "comment",
+          "id": "nd-441efa6c42",
+          "name": "Comment1",
+          "deletable": true,
+          "instructions": [],
+          "height": 173,
+          "width": 401,
+          "x": 105,
+          "y": -90
+        },
+        {
+          "id": "nd-9f7f3268ac",
+          "name": "On_Timeout",
+          "type": "entry",
+          "deletable": false,
+          "variables": [],
+          "instructions": [
+            {
+              "id": "trs-0c7a9a0003",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-e6c012a652"
+              },
+              "transitions": [],
+              "nodeId": "nd-9f7f3268ac"
+            }
+          ],
+          "x": 100,
+          "y": 100
+        },
+        {
+          "id": "nd-199fdcf439",
+          "name": "End",
+          "type": "end",
+          "variables": [],
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-bf76943d55",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "END"
+              },
+              "transitions": [],
+              "nodeId": "nd-199fdcf439"
+            }
+          ],
+          "x": 795,
+          "y": 105
+        }
+      ]
+    },
+    {
+      "id": "wf-conversation-end",
+      "name": "Conversation End",
+      "startNode": "nd-c0d3bd2c92",
+      "variables": [],
+      "links": [
+        {
+          "id": "edg-3cb8028ff6",
+          "source": "nd-c0d3bd2c92",
+          "sourcePort": "trs-92c6f93b0c",
+          "target": "nd-2db7499cc6"
+        },
+        {
+          "id": "edg-8a88f687a0",
+          "source": "nd-2db7499cc6",
+          "sourcePort": "nd-2db7499cc6",
+          "target": "nd-d0c2a6be81"
+        }
+      ],
+      "nodes": [
+        {
+          "instructions": [],
+          "defaultTransition": {
+            "targetNodeId": "nd-d0c2a6be81"
+          },
+          "type": "standard",
+          "id": "nd-2db7499cc6",
+          "name": "Handler",
+          "deletable": true,
+          "x": 420,
+          "y": 105
+        },
+        {
+          "comment": "<p><strong><span style=\"font-size: 18px\">👋 Before Conversation Ends</span></strong></p><p><br>This workflow is executed when right before the conversation <strong>Ends Explicitly.</strong></p><p></p><p>An <strong>Explicit Ending</strong> happens when a workflow transitions on an <strong>End Node</strong>.</p>",
+          "type": "comment",
+          "id": "nd-6d5d3f41dd",
+          "name": "Comment1",
+          "deletable": true,
+          "instructions": [],
+          "height": 148,
+          "width": 461,
+          "x": 105,
+          "y": -45
+        },
+        {
+          "id": "nd-c0d3bd2c92",
+          "name": "On_Explicit_Ending",
+          "type": "entry",
+          "deletable": false,
+          "variables": [],
+          "instructions": [
+            {
+              "id": "trs-92c6f93b0c",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-2db7499cc6"
+              },
+              "transitions": [],
+              "nodeId": "nd-c0d3bd2c92"
+            }
+          ],
+          "x": 100,
+          "y": 100
+        },
+        {
+          "id": "nd-d0c2a6be81",
+          "name": "End",
+          "type": "end",
+          "variables": [],
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-7004dbb2b6",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "END"
+              },
+              "transitions": [],
+              "nodeId": "nd-d0c2a6be81"
+            }
+          ],
+          "x": 780,
+          "y": 105
+        }
+      ]
+    },
+    {
+      "topicId": "tpc-global",
+      "id": "wf-main",
+      "name": "Main",
+      "startNode": "nd-2bb9db230d",
+      "variables": [],
+      "links": [],
+      "nodes": [
+        {
+          "id": "nd-2bb9db230d",
+          "name": "Start",
+          "type": "start",
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-8b0779edc5",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-54aa0c19de"
+              },
+              "transitions": [],
+              "nodeId": "nd-2bb9db230d"
+            }
+          ],
+          "x": -120,
+          "y": -195,
+          "kbPriority": {
+            "enabled": false,
+            "searchScope": "specific",
+            "kbs": []
+          }
+        },
+        {
+          "id": "nd-80ac4ff158",
+          "name": "End",
+          "type": "end",
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-0260f5e672",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "END"
+              },
+              "transitions": [],
+              "nodeId": "nd-80ac4ff158"
+            }
+          ],
+          "x": 510,
+          "y": -135
+        },
+        {
+          "type": "autonomous",
+          "deletable": true,
+          "x": 90,
+          "y": -240,
+          "instructions": [
+            {
+              "id": "act-470916be14",
+              "type": "autonomous",
+              "toolType": "integration",
+              "origin": "integration",
+              "label": "Create Event",
+              "category": "Google Calendar",
+              "integrationId": "googlecalendar",
+              "actionName": "createEvent",
+              "nodeId": "nd-54aa0c19de",
+              "recurrence": {
+                "valueType": "static",
+                "staticValue": [],
+                "dynamicValue": ""
+              },
+              "manualFields": [],
+              "summary": "",
+              "startDateTime": "",
+              "endDateTime": "",
+              "guestsCanInviteOthers": true,
+              "guestsCanSeeOtherGuests": true,
+              "status": "confirmed",
+              "visibility": "default",
+              "guidelines": {
+                "valueType": "dynamic",
+                "dynamicValue": "When creating events, use the GMT-4:00 timezone."
+              },
+              "transitions": []
+            },
+            {
+              "id": "act-04472c03ca",
+              "type": "autonomous",
+              "toolType": "integration",
+              "origin": "integration",
+              "label": "Delete Event",
+              "category": "Google Calendar",
+              "integrationId": "googlecalendar",
+              "actionName": "deleteEvent",
+              "nodeId": "nd-54aa0c19de",
+              "transitions": [],
+              "manualFields": [],
+              "eventId": ""
+            },
+            {
+              "id": "act-2e61c3524e",
+              "type": "autonomous",
+              "toolType": "integration",
+              "origin": "integration",
+              "label": "List Events",
+              "category": "Google Calendar",
+              "integrationId": "googlecalendar",
+              "actionName": "listEvents",
+              "nodeId": "nd-54aa0c19de",
+              "count": {
+                "valueType": "static",
+                "staticValue": 100,
+                "dynamicValue": ""
+              },
+              "manualFields": [],
+              "guidelines": {
+                "valueType": "dynamic",
+                "dynamicValue": ""
+              },
+              "transitions": []
+            },
+            {
+              "id": "act-16d5ecc9a0",
+              "type": "autonomous",
+              "toolType": "integration",
+              "origin": "integration",
+              "label": "Update Event",
+              "category": "Google Calendar",
+              "integrationId": "googlecalendar",
+              "actionName": "updateEvent",
+              "nodeId": "nd-54aa0c19de",
+              "recurrence": {
+                "valueType": "static",
+                "staticValue": [],
+                "dynamicValue": ""
+              },
+              "transitions": [],
+              "manualFields": [],
+              "summary": "",
+              "startDateTime": "",
+              "endDateTime": "",
+              "guestsCanInviteOthers": true,
+              "guestsCanSeeOtherGuests": true,
+              "status": "confirmed",
+              "visibility": "default"
+            },
+            {
+              "id": "act-ddb7440b53",
+              "type": "autonomous",
+              "toolType": "integration",
+              "origin": "integration",
+              "label": "Start Typing Indicator",
+              "category": "Messenger",
+              "integrationId": "messenger",
+              "actionName": "startTypingIndicator",
+              "nodeId": "nd-54aa0c19de",
+              "transitions": []
+            },
+            {
+              "id": "act-efb3141f97",
+              "type": "autonomous",
+              "toolType": "integration",
+              "origin": "integration",
+              "label": "Stop Typing Indicator",
+              "category": "Messenger",
+              "integrationId": "messenger",
+              "actionName": "stopTypingIndicator",
+              "nodeId": "nd-54aa0c19de",
+              "transitions": []
+            }
+          ],
+          "id": "nd-54aa0c19de",
+          "name": "AutonomousNode",
+          "writableVariables": [],
+          "allowConversation": true,
+          "guidelines": {
+            "valueType": "dynamic",
+            "dynamicValue": "## Identity\nYou are a scheduling assistant meant to interact with users to help schedule their time.\n\n## Responsibilities\n- Initiate interactions with a friendly greeting.\n- Guide the conversation to be only about scheduling events.\n- If the user does not specify a start time for an event, find an available time for the same day.\n- Before scheduling an event, ensure that one does not already exist during that time.\n- NEVER schedule anything outside the user's waking hours.\n- Be cognizant of the present date and time. Do not schedule events for the past.\n- Assume today's date is April 2, 2025.\n- Use the GMT-4:00 timezone when scheduling new events.\n- Confirm event duration and start time before scheduling new events.\n\n## Response Style\n- Maintain a friendly, clear, and professional tone.\n- Keep responses brief and to the point.\n- Use buttons for quick replies and easy navigation whenever possible.\n\n## Responses\n- **Greeting**: Start every conversation with a friendly welcome.  \n  _Example_: \"Hi! How can I help you today?\"\n\n- **Asking for the user's waking hours**: If the user's waking hours are unknown, or this is the first time interacting with the user, ask the user for their waking hours.\n  _Example_: \"At what time do you usually start and end your day?\"\n\n- **Confirming event duration**: If an event duration is not specified by the user, estimate the duration and ALWAYS confirm with the user whether the duration is accurate before scheduling the event.\n  _Example_: \"I estimate that washing the dishes will take you 30 minutes. Is that reasonable?\"\n\n- **Confirming event start time**: If an event start time is not specified by the user, find an available start time for the same day unless otherwise specified. ALWAYS Confirm with the user whether the start date and time is acceptable before scheduling the event.\n  _Example_: \"I can fit your workout for **April 2, 2025**, from **7:00 PM** to **8:00 PM**. Does that work for you?\"\n\n- **Confirming event deletion**: Ask for confirmation if a user wants to delete an event from their calendar.\n  _Example_: \"Are you sure you want to delete your meeting on **April 3, 2025** from **9:00 AM** to **10:00 AM**?\n\n- **Avoiding event overlap**: If the user tries to schedule multiple events at the same time, confirm with the user if something should be removed or moved.\n  _Example_: \"There is already an event scheduled for **April 4, 2025** from **3:00 PM** to **4:00 PM**. Do you want me to delete that event, find an alternate time for it, or find an alternate time for the event you are creating now?\"\n\n- **Closing**: End interactions by confirming that the customer's issue has been addressed.  \n  _Example_: \"Is there anything else I can help you with today?\""
+          },
+          "agentConfigOverrides": {
+            "VisionAgent": {
+              "extractionEnabled": false
+            }
+          }
+        },
+        {
+          "type": "comment",
+          "deletable": true,
+          "x": 75,
+          "y": -435,
+          "instructions": [],
+          "comment": "<p>This is the default node. It can search the web.</p><p></p><p>Change instructions and add new sub-workflows to start changing its behaviour.</p><p></p><p>Try asking \"What's Botpress?\"</p>",
+          "id": "nd-9c5f9a0939",
+          "name": "Comment1",
+          "height": 163,
+          "width": 296
+        },
+        {
+          "type": "video",
+          "deletable": true,
+          "instructions": [],
+          "x": -510,
+          "y": -735,
+          "youtubeUrl": "https://www.youtube.com/watch?v=Hyq_Bwn2W5M",
+          "id": "nd-0a8441430e",
+          "name": "Video1"
+        }
+      ],
+      "parentFolder": "root"
+    }
+  ],
+  "intents": [
+    {
+      "id": "int-cancel",
+      "name": "cancel",
+      "utterances_with_slots": [
+        "cancel",
+        "abort",
+        "abandon",
+        "i want to cancel",
+        "forget about this",
+        "leave",
+        "stop",
+        "quit",
+        "you know what, nevermind",
+        "forget it"
+      ]
+    },
+    {
+      "id": "int-no",
+      "name": "no",
+      "utterances_with_slots": [
+        "no",
+        "i don't want to",
+        "absolutely not",
+        "nah",
+        "nope",
+        "not really",
+        "not sure",
+        "no thanks"
+      ]
+    },
+    {
+      "id": "int-yes",
+      "name": "yes",
+      "utterances_with_slots": [
+        "yes",
+        "yeah",
+        "absolutely",
+        "i'd like to",
+        "sure ",
+        "hmm probably",
+        "yup",
+        "ok"
+      ]
+    }
+  ],
+  "list_entities": [],
+  "pattern_entities": [],
+  "actions": [
+    {
+      "type": "code",
+      "id": "act-96345de685",
+      "description": "",
+      "name": "New Action",
+      "raw_code": "",
+      "transpiled_code": ""
+    },
+    {
+      "id": "act-10062daf6b",
+      "name": "New Action",
+      "description": "",
+      "type": "code",
+      "raw_code": ""
+    }
+  ],
+  "hooks": [
+    {
+      "id": "hk-99mudt",
+      "name": "track_iterations",
+      "hookType": "after_llmz_execution",
+      "content": "await actions[\"agi/improvement\"].trackIterations({\n  iterations: execution.iterations.map((iteration) => ({\n    uri: `workflow://${execution.location?.workflowId}/${execution.location?.nodeId}`,\n    conversationId: event.conversationId!,\n    executionId: execution.context.id,\n    iterationId: iteration.id,\n    eventId: event.messageId ?? event.id,\n    userId: event.userId!,\n    iteration: {\n      code: iteration.code ?? \"\",\n      ended_ts: iteration.ended_ts,\n      started_ts: iteration.started_ts,\n      messages: iteration.messages,\n      model: iteration.llm.model,\n      mutations: iteration.mutations,\n      status: iteration.status,\n    },\n  })),\n});\n",
+      "title": "Track LLMz Iterations",
+      "description": "This hook tracks iterations after LLMz execution",
+      "origin": {
+        "type": "integration",
+        "integration": {
+          "id": "agi/improvement",
+          "name": "agi/improvement",
+          "version": "1.0.0",
+          "title": "Improvement"
+        }
+      },
+      "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n  await actions[\"agi/improvement\"].trackIterations({\n    iterations: execution.iterations.map((iteration) => ({\n      uri: `workflow://${execution.location?.workflowId}/${execution.location?.nodeId}`,\n      conversationId: event.conversationId,\n      executionId: execution.context.id,\n      iterationId: iteration.id,\n      eventId: event.messageId ?? event.id,\n      userId: event.userId,\n      iteration: {\n        code: iteration.code ?? \"\",\n        ended_ts: iteration.ended_ts,\n        started_ts: iteration.started_ts,\n        messages: iteration.messages,\n        model: iteration.llm.model,\n        mutations: iteration.mutations,\n        status: iteration.status\n      }\n    }))\n  });\n  ;\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();"
+    },
+    {
+      "id": "hk-1q8lg5q",
+      "name": "inject_learnings",
+      "hookType": "before_llmz_execution",
+      "content": "const { items } = await actions[\"agi/improvement\"].findFeedback({\n  uri: `workflow://${context.location?.workflowId}/${context.location?.nodeId}`,\n  search: context.transcript.map((x) => `${x.role}: ${x.content}`).join(\"\\n\"),\n});\n\nif (items.length) {\n  context.instructions += `\n\n    ## Learnings from Previous Experiences\n\n    ${items\n      .map(\n        (x, i) => `### Learning ${i + 1}\n    ${x.learning}\n    `\n      )\n      .join(\"\\n\")}\n    `;\n}\n",
+      "title": "Provide Learnings to LLMz",
+      "description": "This hook injects learnings into LLMz before execution",
+      "origin": {
+        "type": "integration",
+        "integration": {
+          "id": "agi/improvement",
+          "name": "agi/improvement",
+          "version": "1.0.0",
+          "title": "Improvement"
+        }
+      },
+      "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n  const { items } = await actions[\"agi/improvement\"].findFeedback({\n    uri: `workflow://${context.location?.workflowId}/${context.location?.nodeId}`,\n    search: context.transcript.map((x) => `${x.role}: ${x.content}`).join(\"\\n\")\n  });\n  if (items.length) {\n    context.instructions += `\n\n    ## Learnings from Previous Experiences\n\n    ${items.map(\n      (x, i) => `### Learning ${i + 1}\n    ${x.learning}\n    `\n    ).join(\"\\n\")}\n    `;\n  }\n  ;\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();"
+    },
+    {
+      "id": "hk-1wnbr9q",
+      "name": "knowledge-base-table-of-content",
+      "hookType": "before_llmz_execution",
+      "content": "\n// >>>>>>>>>>>>>>>>>>>>>>\n// This hook is generated and managed by the \"agi/kbo\" integration.\n// This hook provides your autonomous nodes with a Table of Contents of the included knowledge of\n// the knowledge bases used in your autonomous nodes (those included on the `search` tool).\n// Do not edit this file manually.\n\nconst searchTools = context.tools.filter((x) => x.name === 'search')\n\nawait Promise.allSettled(searchTools.map(appendSearchToolTableOfContent))\n\nasync function appendSearchToolTableOfContent(search: LLMZ.Tool) {\n  type SearchMetadata = { kbs: string[]; searchScope: 'all' | 'specific' }\n  const meta: SearchMetadata = search.metadata?.kbs ?? {\n    kbs: [],\n    searchScope: 'all'\n  }\n\n  const kbs = meta.searchScope === 'specific' ? meta.kbs : Artifact.knowledge_base.map((x) => x.id)\n\n  const passages = await Promise.allSettled(\n    kbs.map((kbId) =>\n      client.searchFiles({\n        query: event.preview,\n        consolidate: true,\n        contextDepth: 2,\n        limit: 2,\n        tags: {\n          purpose: 'master-summary',\n          kbId\n        }\n      })\n    )\n  ).then((x) => x.flatMap((y) => (y.status === 'fulfilled' ? y.value.passages.map((p) => p.content) : [])))\n\n  if (passages.length) {\n    context.instructions += `## Table of Contents (for tool \\`${search.name}\\`)\n\nThe below is a summary of the knowledge included in the Knowledge Bases (available to you when calling \\`${search.name}\\` tool).\n\n${passages.join('\\n\\n')}\n\n`\n  }\n}\n\n// End of the hook\n// <<<<<<<<<<<<<<<<<<<<\n",
+      "title": "Knowledge Base Table of Content",
+      "description": "Provides a table of content for the enabled Knowledge Bases on the active autonomous nodes.",
+      "origin": {
+        "type": "integration",
+        "integration": {
+          "id": "agi/kbo",
+          "name": "agi/kbo",
+          "version": "2.0.3",
+          "title": "Knowledge Base Optimizer"
+        }
+      },
+      "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n  const searchTools = context.tools.filter((x) => x.name === \"search\");\n  await Promise.allSettled(searchTools.map(appendSearchToolTableOfContent));\n  async function appendSearchToolTableOfContent(search) {\n    const meta = search.metadata?.kbs ?? {\n      kbs: [],\n      searchScope: \"all\"\n    };\n    const kbs = meta.searchScope === \"specific\" ? meta.kbs : Artifact.knowledge_base.map((x) => x.id);\n    const passages = await Promise.allSettled(\n      kbs.map(\n        (kbId) => client.searchFiles({\n          query: event.preview,\n          consolidate: true,\n          contextDepth: 2,\n          limit: 2,\n          tags: {\n            purpose: \"master-summary\",\n            kbId\n          }\n        })\n      )\n    ).then((x) => x.flatMap((y) => y.status === \"fulfilled\" ? y.value.passages.map((p) => p.content) : []));\n    if (passages.length) {\n      context.instructions += `## Table of Contents (for tool \\`${search.name}\\`)\n\nThe below is a summary of the knowledge included in the Knowledge Bases (available to you when calling \\`${search.name}\\` tool).\n\n${passages.join(\"\\n\\n\")}\n\n`;\n    }\n  }\n  __name(appendSearchToolTableOfContent, \"appendSearchToolTableOfContent\");\n  ;\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();"
+    },
+    {
+      "id": "hk-qn6w76",
+      "name": "knowledge-base-analytics",
+      "hookType": "before_outgoing_middleware",
+      "content": "\n// >>>>>>>>>>>>>>>>>>>>>>\n// This hook is generated and managed by the \"agi/kbo\" integration.\n// This hook provides your autonomous nodes with a Table of Contents of the included knowledge of\n// the knowledge bases used in your autonomous nodes (those included on the `search` tool).\n// Do not edit this file manually.\n  try {\n    const citations = (outgoingEvent.citations ?? [])\n      .map((c) => c.citation.source)\n      .map((source) => ({ kbId: source?.kbId, fileId: source?.docId }))\n\n    void actions['agi/kbo'].trackKbQuery({ citations })\n  } catch {}\n\n// End of the hook\n// <<<<<<<<<<<<<<<<<<<<\n",
+      "title": "Knowledge Base Analytics",
+      "description": "Tracks the usage of the Knowledge Bases",
+      "origin": {
+        "type": "integration",
+        "integration": {
+          "id": "agi/kbo",
+          "name": "agi/kbo",
+          "version": "2.0.3",
+          "title": "Knowledge Base Optimizer"
+        }
+      },
+      "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n  try {\n    const citations = (outgoingEvent.citations ?? []).map((c) => c.citation.source).map((source) => ({ kbId: source?.kbId, fileId: source?.docId }));\n    void actions[\"agi/kbo\"].trackKbQuery({ citations });\n  } catch {\n  }\n  ;\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();"
+    },
+    {
+      "id": "hk-ml1yq",
+      "name": "conversation-analyzer-track-conversation",
+      "hookType": "after_conversation_end",
+      "content": "\n// >>>>>>>>>>>>>>>>>>>>>>\n// This hook is generated and managed by the \"agi/connor\" integration.\n// This hook tracks your conversations to provide some useful analytics on them. See the Int_Connor_Conversations_Table\n// Do not edit this file manually.\n\n   const { success, error } = await actions['agi/connor'].addOrUpdateConversation({\n    conversationId: event.conversationId,\n    transcript: event.state.session.history.length\n      ? event.state.session.history.map((h) => ({ sender: h.sender, preview: h.preview }))\n      : [{ sender: 'user', preview: event.preview }]\n  })\n\n// End of the hook\n// <<<<<<<<<<<<<<<<<<<<\n",
+      "title": "Track Conversation",
+      "description": "Tracks conversations in a Botpress table for analysis",
+      "origin": {
+        "type": "integration",
+        "integration": {
+          "id": "agi/connor",
+          "name": "agi/connor",
+          "version": "0.1.0",
+          "title": "Conversation Analyzer"
+        }
+      },
+      "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n  const { success, error } = await actions[\"agi/connor\"].addOrUpdateConversation({\n    conversationId: event.conversationId,\n    transcript: event.state.session.history.length ? event.state.session.history.map((h) => ({ sender: h.sender, preview: h.preview })) : [{ sender: \"user\", preview: event.preview }]\n  });\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();"
+    }
+  ],
+  "qnas": [],
+  "knowledge_base": [
+    {
+      "dataSources": [
+        {
+          "created_on": 1722900679385,
+          "data": {},
+          "disabled": false,
+          "id": "ds-529bb979ed",
+          "type": "file-api"
+        }
+      ],
+      "description": "This is about New KB1",
+      "id": "kb-2f0a7ea639",
+      "name": "Default Knowledge Base",
+      "parentFolder": "root"
+    }
+  ],
+  "folders": [],
+  "agents": {
+    "SummaryAgent": {
+      "enabled": true,
+      "config": {
+        "summaryMaxTokens": 100,
+        "transcriptMaxLines": 10,
+        "model": "fast-model"
+      }
+    },
+    "TranslatorAgent": {
+      "config": {
+        "detectLanguage": true
+      }
+    },
+    "KnowledgeAgent": {
+      "enabled": true,
+      "config": {
+        "answerManually": true,
+        "context": "Summary of the conversation:\n\"\"\"\n{{conversation.SummaryAgent.summary}}\n\"\"\"\n\nTranscript:\n\"\"\"\n{{conversation.SummaryAgent.transcript}}\n\"\"\"",
+        "bestModel": "gpt-4-turbo",
+        "fastestModel": "fast-model",
+        "questionModel": "fast-model",
+        "strategy": "hybrid",
+        "chunks": 50
+      }
+    },
+    "PersonalityAgent": {
+      "config": {
+        "active": true,
+        "personality": "",
+        "model": "fast-model"
+      }
+    },
+    "VisionAgent": {
+      "enabled": false,
+      "config": {
+        "extractionEnabled": false
+      }
+    },
+    "PolicyAgent": {
+      "enabled": false,
+      "config": {
+        "active": true,
+        "model": "fast-model"
+      }
+    },
+    "HitlAgent": {
+      "enabled": false,
+      "config": {
+        "integration": "hitl",
+        "transferMessage": "I have escalated this conversation to a human agent. They should be with you shortly.",
+        "agentAssignedMessage": "{{conversation.HitlAgent.humanAgentName}} has joined the conversation.",
+        "closeMessage": "Agent closed the conversation. I will continue assisting you."
+      }
+    }
+  },
+  "tables": {
+    "table_01JQT67SZCHDMSG7ZAZA01W059": {
+      "id": "table_01JQT67SZCHDMSG7ZAZA01W059",
+      "name": "RouterAgentTable",
+      "factor": 1,
+      "frozen": false,
+      "tags": {
+        "role": "agents/router/intents",
+        "agent": "RouterAgent",
+        "system": "true"
+      },
+      "createdAt": "2025-04-02T02:45:43.024Z",
+      "updatedAt": "2025-04-02T02:45:43.024Z",
+      "createdBy": "user:2f217997-3d0f-4ebf-8a55-21da2aa46f22",
+      "updatedBy": null,
+      "isComputeEnabled": false,
+      "schema": {
+        "type": "object",
+        "x-zui": {},
+        "required": [
+          "phrase",
+          "intentId",
+          "phraseId"
+        ],
+        "properties": {
+          "phrase": {
+            "type": "string",
+            "x-zui": {
+              "index": 0,
+              "searchable": true
+            }
+          },
+          "intentId": {
+            "type": "string",
+            "x-zui": {
+              "index": 1,
+              "searchable": true
+            }
+          },
+          "phraseId": {
+            "type": "string",
+            "x-zui": {
+              "index": 2,
+              "searchable": true
+            }
+          }
+        },
+        "additionalProperties": true
+      },
+      "parentFolder": "root",
+      "selectors": []
+    },
+    "table_01JQT67T1AM3S6RSR9BJN52PNA": {
+      "id": "table_01JQT67T1AM3S6RSR9BJN52PNA",
+      "name": "Int_Connor_Conversations_Table",
+      "factor": 30,
+      "frozen": true,
+      "tags": {
+        "origin": "integration",
+        "purpose": "Conversations",
+        "version": "Dec-2024",
+        "integration": "Int_connor",
+        "x-studio-icon": "lucide://MessagesSquare",
+        "x-studio-color": "grass",
+        "x-studio-title": "Conversations",
+        "x-studio-readonly": "true",
+        "x-studio-description": "Table for analyzing conversations"
+      },
+      "createdAt": "2025-04-02T02:45:43.085Z",
+      "updatedAt": "2025-04-02T02:45:43.085Z",
+      "createdBy": "user:2f217997-3d0f-4ebf-8a55-21da2aa46f22",
+      "updatedBy": null,
+      "isComputeEnabled": true,
+      "schema": {
+        "type": "object",
+        "x-zui": {},
+        "required": [
+          "topics",
+          "summary",
+          "resolved",
+          "transcript",
+          "escalations",
+          "conversationId"
+        ],
+        "properties": {
+          "topics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "x-zui": {}
+            },
+            "x-zui": {
+              "index": 0,
+              "title": "Topics",
+              "computed": {
+                "action": "ai",
+                "prompt": "Identify the topics mentioned by the user in the provided transcript. Focus only on user-initiated topics relevant to their needs (e.g., billing issues, technical troubleshooting, product recommendations, account setup, feature requests, complaints, or cancellation inquiries). \nTranscript:\n\n{{transcript}}",
+                "dependencies": [
+                  "transcript"
+                ]
+              },
+              "searchable": true
+            },
+            "nullable": true,
+            "description": "Optional. An array of topics or themes discussed during the conversation."
+          },
+          "summary": {
+            "type": "string",
+            "x-zui": {
+              "index": 1,
+              "title": "Summary",
+              "computed": {
+                "action": "ai",
+                "prompt": "Summarize the provided transcript.\nHere's the transcript:\n\n{{transcript}}",
+                "dependencies": [
+                  "transcript"
+                ]
+              },
+              "searchable": true
+            },
+            "nullable": true,
+            "description": "A brief summary of the conversation's content."
+          },
+          "resolved": {
+            "type": "boolean",
+            "x-zui": {
+              "index": 2,
+              "title": "Resolved",
+              "computed": {
+                "action": "ai",
+                "prompt": "Based on the transcript decide whether the users queries were resolved or not by the end of the chat. If not resolved respond with `false`.\nHere's the transcript:\n\n{{transcript}}",
+                "dependencies": [
+                  "transcript"
+                ]
+              },
+              "searchable": true
+            },
+            "nullable": true,
+            "description": "A boolean indicating whether the customer's issue was resolved by the end of the chat."
+          },
+          "sentiment": {
+            "enum": [
+              "very positive",
+              "positive",
+              "neutral",
+              "negative",
+              "very negative"
+            ],
+            "type": "string",
+            "x-zui": {
+              "index": 3,
+              "title": "Sentiment",
+              "computed": {
+                "action": "ai",
+                "prompt": "Based on the transcript decide the overall sentiment inferred from the conversation (from the following - very positive, positive, neutral, negative, very negative).\nHere's the transcript:\n\n{{transcript}}",
+                "dependencies": [
+                  "transcript"
+                ]
+              },
+              "searchable": true
+            },
+            "nullable": true,
+            "description": "Optional. The overall sentiment inferred from the conversation (e.g., positive, neutral, negative)."
+          },
+          "transcript": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "x-zui": {},
+              "required": [
+                "sender",
+                "preview"
+              ],
+              "properties": {
+                "sender": {
+                  "enum": [
+                    "bot",
+                    "user"
+                  ],
+                  "type": "string",
+                  "x-zui": {}
+                },
+                "preview": {
+                  "type": "string",
+                  "x-zui": {}
+                }
+              },
+              "additionalProperties": false
+            },
+            "x-zui": {
+              "index": 4,
+              "title": "Transcript",
+              "searchable": true
+            },
+            "description": "The transcript of the conversation, represented as an array of message items."
+          },
+          "escalations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "x-zui": {}
+            },
+            "x-zui": {
+              "index": 5,
+              "title": "Escalations",
+              "computed": {
+                "action": "ai",
+                "prompt": "Extract the escalations from the provided transcript. An array representing moments when the conversation was escalated to another team member or department.\nHere's the transcript:\n\n{{transcript}}",
+                "dependencies": [
+                  "transcript"
+                ]
+              },
+              "searchable": true
+            },
+            "nullable": true,
+            "description": "Optional. An array representing moments when the conversation was escalated to another team member or department."
+          },
+          "conversationId": {
+            "type": "string",
+            "x-zui": {
+              "index": 6,
+              "title": "Conversation ID",
+              "searchable": true
+            },
+            "description": "A unique identifier for this specific chat session."
+          }
+        },
+        "additionalProperties": true
+      },
+      "parentFolder": "root",
+      "selectors": [],
+      "metadata": {
+        "columns": [
+          {
+            "index": 0,
+            "width": 50
+          },
+          {
+            "index": 1,
+            "width": 120
+          },
+          {
+            "index": 2,
+            "width": 120
+          },
+          {
+            "index": 5,
+            "width": 168,
+            "hidden": false
+          },
+          {
+            "index": 6,
+            "width": 140,
+            "hidden": false
+          },
+          {
+            "index": 7,
+            "width": 90,
+            "hidden": false
+          },
+          {
+            "index": 8,
+            "width": 140,
+            "hidden": false
+          },
+          {
+            "index": 9,
+            "width": 140,
+            "hidden": false
+          },
+          {
+            "index": 10,
+            "width": 140,
+            "hidden": false
+          },
+          {
+            "index": 11,
+            "width": 140,
+            "hidden": false
+          }
+        ]
+      }
+    },
+    "table_01JQT67VJEPAYA2K4Z3YMJKB8R": {
+      "id": "table_01JQT67VJEPAYA2K4Z3YMJKB8R",
+      "name": "Int_Improvement_Feedback_Table",
+      "factor": 30,
+      "frozen": true,
+      "tags": {
+        "origin": "integration",
+        "purpose": "improvement",
+        "version": "Nov-2024",
+        "integration": "Int_Improvement",
+        "x-studio-icon": "lucide://atom",
+        "x-studio-color": "green",
+        "x-studio-title": "Feedback",
+        "x-studio-readonly": "true",
+        "x-studio-description": "Table to store acquired feedback on iterations for active learning"
+      },
+      "createdAt": "2025-04-02T02:45:44.657Z",
+      "updatedAt": "2025-04-02T02:45:44.657Z",
+      "createdBy": "integration:agi/improvement",
+      "updatedBy": null,
+      "isComputeEnabled": true,
+      "schema": {
+        "type": "object",
+        "x-zui": {},
+        "required": [
+          "uri",
+          "iterationId",
+          "before",
+          "feedback",
+          "after"
+        ],
+        "properties": {
+          "uri": {
+            "type": "string",
+            "x-zui": {
+              "index": 0,
+              "searchable": true
+            },
+            "maxLength": 250,
+            "minLength": 1
+          },
+          "after": {
+            "type": "string",
+            "x-zui": {
+              "index": 4,
+              "searchable": true
+            },
+            "minLength": 1
+          },
+          "before": {
+            "type": "string",
+            "x-zui": {
+              "index": 2,
+              "searchable": true
+            },
+            "minLength": 1
+          },
+          "feedback": {
+            "type": "string",
+            "x-zui": {
+              "index": 3,
+              "searchable": true
+            },
+            "minLength": 1
+          },
+          "learning": {
+            "type": "string",
+            "x-zui": {
+              "index": 5,
+              "computed": {
+                "model": "fast-model",
+                "action": "ai",
+                "prompt": "What would you tell your future self to improve next time?\nCode Before:\n\n```\n{{before}}\n```\n\nFeedback: \"{{feedback}}\"\n\nCode After:\n\n```\n{{after}}\n```\n\nFor the learning, it must be standalone, concise but also accurately depict the situation and feedback you were given.\n\nTry to follow one of the below structures:\n\n<example>\nIn [situation X], I learned that I should [use tool `X` rather than `Y` because ...]\n</example>\n\n<example>\nWhen trying to [...], I should use [tool X, tool Y or tool Z] like this:\n\n\\`\\`\\`\n// snippet to explain a drastic code change between before and after, or a non-obvious code snippet\n\\`\\`\\`\n</example>\n\n<example>\nWhenever [Y] happens, I should avoid [...] and instead [...].\n</example>\n\nKeep it concise. Do not refer to \"this situation\" or to the feedback. Both have been provided by an expert reviewing the conversation, NOT the actual user. So you must embed the content from the above inside your learning so it is standalone.\n",
+                "dependencies": [
+                  "before",
+                  "feedback",
+                  "after"
+                ]
+              },
+              "searchable": true
+            },
+            "default": null,
+            "nullable": true,
+            "minLength": 1
+          },
+          "iterationId": {
+            "type": "string",
+            "x-zui": {
+              "index": 1,
+              "searchable": true
+            },
+            "maxLength": 100,
+            "minLength": 1
+          }
+        },
+        "additionalProperties": true
+      },
+      "parentFolder": "root",
+      "selectors": []
+    },
+    "table_01JQT683DMPTQJEWHMT65K0TZ9": {
+      "id": "table_01JQT683DMPTQJEWHMT65K0TZ9",
+      "name": "Int_KB_Analytics_Table",
+      "factor": 1,
+      "frozen": true,
+      "tags": {
+        "origin": "integration",
+        "purpose": "Knowledge Bases",
+        "version": "Dec-2024",
+        "integration": "Int_kbo",
+        "x-studio-icon": "lucide://BookOpenText",
+        "x-studio-color": "grass",
+        "x-studio-title": "KB Analytics",
+        "x-studio-readonly": "true",
+        "x-studio-description": "Table for storing the KB Analytics"
+      },
+      "createdAt": "2025-04-02T02:45:52.695Z",
+      "updatedAt": "2025-04-02T02:45:52.695Z",
+      "createdBy": "integration:agi/kbo",
+      "updatedBy": null,
+      "isComputeEnabled": false,
+      "schema": {
+        "type": "object",
+        "x-zui": {},
+        "required": [
+          "uri",
+          "fileId",
+          "kbId"
+        ],
+        "properties": {
+          "uri": {
+            "type": "string",
+            "x-zui": {
+              "index": 0,
+              "searchable": true
+            },
+            "pattern": "analytics:\\/\\/[A-Z0-9]+$",
+            "maxLength": 20,
+            "minLength": 13,
+            "description": "A URI of the format \"analytics://<ULID>\"."
+          },
+          "kbId": {
+            "type": "string",
+            "x-zui": {
+              "index": 2,
+              "searchable": true
+            }
+          },
+          "count": {
+            "type": "number",
+            "x-zui": {
+              "index": 3,
+              "searchable": true
+            },
+            "default": 0
+          },
+          "fileId": {
+            "type": "string",
+            "x-zui": {
+              "index": 1,
+              "searchable": true
+            }
+          }
+        },
+        "additionalProperties": true
+      },
+      "parentFolder": "root",
+      "selectors": []
+    }
+  },
+  "schemas": [],
+  "versions": [
+    {
+      "name": "02 Apr 25 09:01",
+      "id": "version_01JQWJN45ACD0HGE8DMCQNQPT3"
+    },
+    {
+      "name": "02 Apr 25 01:19",
+      "id": "version_01JQVR7HJWVM11TYAF8VBN95G1"
+    },
+    {
+      "name": "02 Apr 25 12:58",
+      "id": "version_01JQVQ1S7ABN8295H5CJKWQM8G"
+    }
+  ],
+  "revision": 242,
+  "revisionMetadata": {
+    "lastRevisionCheckAt": "2025-04-03T01:03:07.798Z",
+    "lastRevisionId": 241,
+    "multiplayerStatus": "connected",
+    "multiplayerTraces": [
+      "2025-04-03T00:23:28.222Z: initialized -> connecting (ok)",
+      "2025-04-03T00:23:28.671Z (tEX_tonecU): connecting -> connected (ok)",
+      "2025-04-03T00:43:37.844Z (tEX_tonecU): connected -> disconnected (Connection to server temporarily unavailable)",
+      "2025-04-03T00:43:37.848Z (tEX_tonecU): disconnected -> connecting (ok)",
+      "2025-04-03T00:43:38.116Z (tEX_tonecU): connecting -> disconnected (Unable to connect (network unreachable))",
+      "2025-04-03T00:43:48.596Z (tEX_tonecU): disconnected -> connecting (ok)",
+      "2025-04-03T00:43:48.951Z (tEX_tonecU): connecting -> connected (ok)"
+    ],
+    "players": [
+      "eziel034@uottawa.ca / sess_01JQWGFZQT22SMKZ5MX1N8TYC9 / Thu, 03 Apr 2025 00:23:28 GMT"
+    ],
+    "savedAt": "2025-04-03T01:03:07.798Z",
+    "savedBy": "eziel034@uottawa.ca",
+    "sessionId": "sess_01JQWGFZQT22SMKZ5MX1N8TYC9"
+  },
+  "identity": {
+    "name": "modest-bear",
+    "manual_instructions": "",
+    "icon": {
+      "type": "emoji",
+      "emoji": "🤖 ",
+      "background_color": "var(--orange-5)"
+    },
+    "ai_summary": {
+      "value": "Chatbot named sparkling-eland provides concise information.",
+      "input_hash": "7j8s9",
+      "generated_at": "2025-02-26T18:41:46.789Z",
+      "version": "1.0.0"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+window.botpress.init({
+  "botId": "28e8c0b0-8122-4c80-bd8f-e01af78a2c5a",
+  "configuration": {
+    "website": {},
+    "email": {},
+    "phone": {},
+    "termsOfService": {},
+    "privacyPolicy": {},
+    "color": "#3B82F6",
+    "variant": "solid",
+    "themeMode": "light",
+    "fontFamily": "inter",
+    "radius": 1
+  },
+  "clientId": "a8e82535-e6fe-464d-8756-d7fa96085eb4"
+});
